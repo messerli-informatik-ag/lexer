@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using Lexer.Test.Tokens;
-using Messerli.Lexer;
 using Messerli.Lexer.Rules;
+using Messerli.Lexer.Test.Tokens;
 
-namespace Lexer.Test.LexerRules
+namespace Messerli.Lexer.Test.LexerRules
 {
     public class WordTokenizerWithLines : ILexerRules
     {

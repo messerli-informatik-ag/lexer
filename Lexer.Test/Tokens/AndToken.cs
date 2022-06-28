@@ -1,6 +1,6 @@
 ﻿using Messerli.Lexer.Tokens;
 
-namespace Lexer.Test.Tokens
+namespace Messerli.Lexer.Test.Tokens
 {
     internal class AndToken : IToken
     {

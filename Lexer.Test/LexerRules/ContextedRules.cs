@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lexer.Test.Tokens;
-using Messerli.Lexer;
 using Messerli.Lexer.Rules;
+using Messerli.Lexer.Test.Tokens;
 
-namespace Lexer.Test.LexerRules
+namespace Messerli.Lexer.Test.LexerRules
 {
     public class ContextedRules : ILexerRules
     {

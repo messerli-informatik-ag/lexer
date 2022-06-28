@@ -1,8 +1,7 @@
-﻿using Lexer.Test.LexerRules;
-using Messerli.Lexer;
+﻿using Messerli.Lexer.Test.LexerRules;
 using Xunit;
 
-namespace Lexer.Test
+namespace Messerli.Lexer.Test
 {
     public class PositionWithLinesTest
     {

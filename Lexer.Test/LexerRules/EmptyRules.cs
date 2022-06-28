@@ -2,7 +2,7 @@
 using System.Linq;
 using Messerli.Lexer.Rules;
 
-namespace Lexer.Test.LexerRules
+namespace Messerli.Lexer.Test.LexerRules
 {
     public class EmptyRules : ILexerRules
     {

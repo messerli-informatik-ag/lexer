@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using Lexer.Test.LexerRules;
-using Lexer.Test.Tokens;
-using Messerli.Lexer;
 using Messerli.Lexer.Exceptions;
+using Messerli.Lexer.Test.LexerRules;
+using Messerli.Lexer.Test.Tokens;
 using Xunit;
 
-namespace Lexer.Test
+namespace Messerli.Lexer.Test
 {
     /// <summary>
     /// Test to verify the functionality of the lexer.
