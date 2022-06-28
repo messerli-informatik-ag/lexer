@@ -18,7 +18,7 @@ internal sealed record MinusToken(string Number): IToken;
 internal sealed record NumberToken(string Number): IToken;
 ```
 
-Now you need some rules, the `TokenWalker` expects an `IEnumerable<LexerRule>`.
+Now you need some rules, the `TokenWalker` expects an `IEnumerable<ILexerRule>`.
 
 ```cs
 internal static class ExampleRules

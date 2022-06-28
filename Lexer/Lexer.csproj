@@ -11,7 +11,7 @@
         <RepositoryUrl>https://github.com/messerli-informatik-ag/lexer</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>parser, lexer</PackageTags>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
