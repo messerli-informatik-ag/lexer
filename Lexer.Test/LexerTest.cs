@@ -70,7 +70,7 @@ public class LexerTest
     [Fact]
     public void GivenAStringAndAMissingTokenizerThrows()
     {
-        var x = new ContextedRules();
+        var x = new RulesWithContext();
         var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
 
         var exception = Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("aa aa cc aa UU cc aa"));
@@ -81,7 +81,7 @@ public class LexerTest
     [Fact]
     public void GivenALexerAndAContextedLexerRuleGenerateTokenContexted()
     {
-        var x = new ContextedRules();
+        var x = new RulesWithContext();
         var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
 
         var lexemes = tokenizer.Scan("aa aa cc aa bb cc aa").ToList();
@@ -107,8 +107,8 @@ public class LexerTest
         Assert.IsType<AaToken>(lexemes[12].Token);
     }
 
-    private Tokenizer CreateTestTokenizer()
+    private static Tokenizer CreateTestTokenizer()
     {
-        return new Tokenizer(new ExampleRules(), s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
+        return new Tokenizer(new ExampleRules(), LexerReader.Create, lexemes => new LinePositionCalculator(lexemes));
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Funcky.Monads;
+using static Funcky.Functional;
 
 namespace Messerli.Lexer.Rules;
 
-public record ContextedLexerRule : ILexerRule
+public class ContextedLexerRule : ILexerRule
 {
     public ContextedLexerRule(Predicate<char> symbolPredicate, Predicate<List<Lexeme>> contextPredicate, Func<ILexerReader, Lexeme> createToken, int weight)
     {
@@ -23,14 +24,14 @@ public record ContextedLexerRule : ILexerRule
     public int Weight { get; }
 
     public Option<Lexeme> Match(ILexerReader reader)
-        => ApplyPredicate(reader).Match(none: false, some: p => p)
+        => ApplyPredicate(reader).Match(none: false, some: Identity)
             ? CreateToken(reader)
             : Option<Lexeme>.None();
+
+    public bool IsActive(List<Lexeme> context)
+        => ContextPredicate(context);
 
     private Option<bool> ApplyPredicate(ILexerReader reader)
         => from nextCharacter in reader.Peek()
             select SymbolPredicate(nextCharacter);
-
-    public bool IsActive(List<Lexeme> context)
-        => ContextPredicate(context);
 }

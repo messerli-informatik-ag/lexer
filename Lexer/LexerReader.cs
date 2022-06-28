@@ -11,6 +11,9 @@ public class LexerReader : ILexerReader
 
     public int Position { get; private set; }
 
+    public static LexerReader Create(string expression)
+        => new(expression);
+
     public Option<char> Peek(int lookAhead = 0)
         => PeekAt(Position + lookAhead);
 
@@ -24,7 +27,7 @@ public class LexerReader : ILexerReader
     }
 
     private Option<char> PeekAt(int position)
-        => position >= 0 && position < _expression.Length
+        => position is 0 && position < _expression.Length
             ? _expression[position]
             : Option<char>.None();
 }

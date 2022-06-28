@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Messerli.Lexer;
 
 public class LinePositionCalculator : ILinePositionCalculator
 {
-    private readonly List<Position> _newLines;
+    private readonly ImmutableList<Position> _newLines;
 
-    public LinePositionCalculator(List<Lexeme> lexemes) =>
+    public LinePositionCalculator(IEnumerable<Lexeme> lexemes) =>
         _newLines = lexemes
             .Where(l => l.IsLineBreak)
             .Select(l => l.Position)
-            .ToList();
+            .ToImmutableList();
 
     public delegate ILinePositionCalculator Factory(List<Lexeme> lexemes);
+
+    public static LinePositionCalculator Create(List<Lexeme> lexemes)
+        => new(lexemes);
 
     public LinePosition CalculateLinePosition(Lexeme lexeme)
         => CalculateRelativePosition(
@@ -33,7 +37,7 @@ public class LinePositionCalculator : ILinePositionCalculator
         => _newLines
             .Count(l => l.StartPosition < absolutePosition);
 
-    private LinePosition CalculateRelativePosition(int lineNumber, int absolutePosition, int length, Position newLinePosition)
+    private static LinePosition CalculateRelativePosition(int lineNumber, int absolutePosition, int length, Position newLinePosition)
         => new(
             ToHumanIndex(lineNumber),
             ToHumanIndex(absolutePosition - newLinePosition.EndPosition),

@@ -22,21 +22,21 @@ public class SimpleLexerRule<TToken> : ILexerRule
         => _textSymbol.Length;
 
     public Option<Lexeme> Match(ILexerReader reader)
-        => MatchLexem(reader, reader.Position);
+        => MatchLexeme(reader, reader.Position);
 
     public bool IsActive(List<Lexeme> context)
         => true;
 
-    private Option<Lexeme> MatchLexem(ILexerReader reader, int startPosition)
+    private Option<Lexeme> MatchLexeme(ILexerReader reader, int startPosition)
         => IsSymbolMatchingReader(reader) && (IsOperator() || HasWordBoundary(reader))
-            ? ConsumeLexem(reader, startPosition)
+            ? ConsumeLexeme(reader, startPosition)
             : Option<Lexeme>.None();
 
-    private Option<Lexeme> ConsumeLexem(ILexerReader reader, int startPosition)
+    private Option<Lexeme> ConsumeLexeme(ILexerReader reader, int startPosition)
     {
         _textSymbol.ForEach(_ => reader.Read());
 
-        return CreateLexem(startPosition);
+        return CreateLexeme(startPosition);
     }
 
     // we do not want to extract key words in the middle of a word, so a symbol must have ended.
@@ -47,16 +47,16 @@ public class SimpleLexerRule<TToken> : ILexerRule
     private bool IsOperator()
         => !_isTextSymbol;
 
-    private bool NonLetterOrDigit(char character)
+    private static bool NonLetterOrDigit(char character)
         => !char.IsLetterOrDigit(character);
 
     private bool IsSymbolMatchingReader(ILexerReader reader)
         => _textSymbol.Select((character, index) => new { character, index })
             .All(t => reader.Peek(t.index).Match(none: false, some: c => c == t.character));
 
-    private Lexeme CreateLexem(int start)
-        => CreateLexemFromToken(start, new TToken());
+    private Lexeme CreateLexeme(int start)
+        => CreateLexemeFromToken(start, new TToken());
 
-    private Lexeme CreateLexemFromToken(int start, TToken token)
+    private Lexeme CreateLexemeFromToken(int start, TToken token)
         => new(token, new Position(start, _textSymbol.Length), token is ILineBreakToken);
 }

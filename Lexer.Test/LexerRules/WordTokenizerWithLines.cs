@@ -16,14 +16,14 @@ public class WordTokenizerWithLines : ILexerRules
         yield return new SimpleLexerRule<NewLineToken>("\r");
     }
 
-    private Lexeme ScanWord(ILexerReader reader)
+    private static Lexeme ScanWord(ILexerReader reader)
     {
         var startPosition = reader.Position;
         var word = new StringBuilder();
 
         while (reader.Peek().Match(none: false, some: char.IsLetter))
         {
-            reader.Read().AndThen(c => word.Append(c));
+            _ = reader.Read().AndThen(word.Append);
         }
 
         return new Lexeme(new WordToken(word.ToString()), new Position(startPosition, reader.Position - startPosition));

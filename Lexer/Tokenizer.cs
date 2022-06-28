@@ -4,6 +4,7 @@ using System.Linq;
 using Funcky.Monads;
 using Messerli.Lexer.Exceptions;
 using Messerli.Lexer.Rules;
+using static Funcky.Functional;
 
 namespace Messerli.Lexer;
 
@@ -12,7 +13,7 @@ public class Tokenizer
     private readonly ILexerRules _lexerRules;
     private readonly Func<string, ILexerReader> _newLexerReader;
     private readonly LinePositionCalculator.Factory _newLinePositionCalculator;
-    private readonly List<Lexeme> _lexemes = new List<Lexeme>();
+    private readonly List<Lexeme> _lexemes = new();
 
     public Tokenizer(ILexerRules lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator)
         => (_lexerRules, _newLexerReader, _newLinePositionCalculator) = (lexerRules, newLexerReader, newLinePositionCalculator);
@@ -22,12 +23,12 @@ public class Tokenizer
         var reader = _newLexerReader(expression);
 
         _lexemes.Clear();
-        while (reader.Peek().Match(none: false, some: c => true))
+        while (reader.Peek().Match(none: false, some: True))
         {
             var lexeme = SelectLexerRule(reader, _lexemes)
                 .Match(
                     none: () => HandleUnknownToken(reader),
-                    some: t => t);
+                    some: Identity);
 
             _lexemes.Add(lexeme);
         }
@@ -55,11 +56,11 @@ public class Tokenizer
             .Select(rule => rule.Match(reader))
             .FirstOrDefault(HasRuleMatched);
 
-    private bool HasRuleMatched(Option<Lexeme> matched)
+    private static bool HasRuleMatched(Option<Lexeme> matched)
         => matched.Match(
             none: false,
-            some: t => true);
+            some: True);
 
-    private object GetRuleWeight(ILexerRule rule)
+    private static object GetRuleWeight(ILexerRule rule)
         => rule.Weight;
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Funcky.Monads;
+using static Funcky.Functional;
 
 namespace Messerli.Lexer.Rules;
 
@@ -20,7 +21,7 @@ public class LexerRule : ILexerRule
     public int Weight { get; }
 
     public Option<Lexeme> Match(ILexerReader reader)
-        => ApplyPredicate(reader).Match(none: false, some: p => p)
+        => ApplyPredicate(reader).Match(none: false, some: Identity)
             ? CreateToken(reader)
             : Option<Lexeme>.None();
 

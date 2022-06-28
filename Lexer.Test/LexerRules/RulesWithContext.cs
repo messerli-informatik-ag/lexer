@@ -6,7 +6,7 @@ using Messerli.Lexer.Test.Tokens;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class ContextedRules : ILexerRules
+public class RulesWithContext : ILexerRules
 {
     public IEnumerable<ILexerRule> GetRules()
     {
@@ -17,18 +17,18 @@ public class ContextedRules : ILexerRules
         yield return new ContextedLexerRule(
             c => c == 'c',
             context => context.Any(p => p.Token is BbToken),
-            ScanCcAfterBB,
+            ScanCcAfterBb,
             3);
     }
 
-    private Lexeme ScanCcAfterBB(ILexerReader reader)
+    private static Lexeme ScanCcAfterBb(ILexerReader reader)
     {
         var startPosition = reader.Position;
 
-        if (reader.Peek().Match(none: false, some: c => c == 'c'))
+        if (reader.Peek().Match(none: false, some: IsC))
         {
             reader.Read();
-            if (reader.Peek().Match(none: false, some: c => c == 'c'))
+            if (reader.Peek().Match(none: false, some: IsC))
             {
                 reader.Read();
                 return new Lexeme(new CcAfterBbToken(), new Position(startPosition, reader.Position - startPosition));
@@ -37,4 +37,7 @@ public class ContextedRules : ILexerRules
 
         throw new NotImplementedException();
     }
+
+    private static bool IsC(char c)
+        => c == 'c';
 }

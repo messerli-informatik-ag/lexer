@@ -2,6 +2,7 @@
 using System.Text;
 using Messerli.Lexer.Rules;
 using Messerli.Lexer.Test.Tokens;
+using static Funcky.Functional;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
@@ -24,7 +25,7 @@ internal class ExampleRules : ILexerRules
         var stringBuilder = new StringBuilder();
         while (reader.Peek().Match(none: false, some: char.IsLetterOrDigit))
         {
-            stringBuilder.Append(reader.Read().Match(none: ' ', some: c => c));
+            stringBuilder.Append(reader.Read().Match(none: ' ', some: Identity));
         }
 
         return new Lexeme(new IdentifierToken(stringBuilder.ToString()), new Position(startPosition, reader.Position - startPosition));
