@@ -1,19 +1,18 @@
 ﻿using Messerli.Lexer.Tokens;
 
-namespace Messerli.Lexer.Test.Tokens
+namespace Messerli.Lexer.Test.Tokens;
+
+internal class WordToken : IToken
 {
-    internal class WordToken : IToken
+    public WordToken(string word)
     {
-        public WordToken(string word)
-        {
-            Word = word;
-        }
+        Word = word;
+    }
 
-        public string Word { get; }
+    public string Word { get; }
 
-        public override string ToString()
-        {
-            return Word;
-        }
+    public override string ToString()
+    {
+        return Word;
     }
 }

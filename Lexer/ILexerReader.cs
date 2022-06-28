@@ -1,13 +1,12 @@
 ﻿using Funcky.Monads;
 
-namespace Messerli.Lexer
+namespace Messerli.Lexer;
+
+public interface ILexerReader
 {
-    public interface ILexerReader
-    {
-        int Position { get; }
+    int Position { get; }
 
-        Option<char> Peek(int lookAhead = 0);
+    Option<char> Peek(int lookAhead = 0);
 
-        Option<char> Read();
-    }
+    Option<char> Read();
 }

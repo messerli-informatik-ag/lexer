@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace Messerli.Lexer.Rules
+namespace Messerli.Lexer.Rules;
+
+/// <summary>
+/// This interface represents a class which can return a full set rules for the lexer.
+/// </summary>
+public interface ILexerRules
 {
     /// <summary>
-    /// This interface represents a class which can return a full set rules for the lexer.
+    /// Function returns a full set of rules for the lexer.
     /// </summary>
-    public interface ILexerRules
-    {
-        /// <summary>
-        /// Function returns a full set of rules for the lexer.
-        /// </summary>
-        /// <returns>lexer rules.</returns>
-        IEnumerable<ILexerRule> GetRules();
-    }
+    /// <returns>lexer rules.</returns>
+    IEnumerable<ILexerRule> GetRules();
 }

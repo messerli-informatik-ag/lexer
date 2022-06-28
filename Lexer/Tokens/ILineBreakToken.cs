@@ -1,6 +1,5 @@
-﻿namespace Messerli.Lexer.Tokens
+﻿namespace Messerli.Lexer.Tokens;
+
+public interface ILineBreakToken
 {
-    public interface ILineBreakToken
-    {
-    }
 }
