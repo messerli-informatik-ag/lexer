@@ -1,17 +1,17 @@
-﻿using System;
-using Funcky.Monads;
+﻿using Funcky.Monads;
 
 namespace Messerli.Lexer.Exceptions;
 
-public class UnknownTokenException : Exception
+public class UnknownTokenException : LexerException
 {
-    private readonly Option<char> _token;
-    private readonly LinePosition _position;
-
     public UnknownTokenException(Option<char> token, LinePosition position)
         : base($"Unknown Token '{token.Match(none: 'Ɛ', some: t => t)}' at Line {position.Line} Column {position.Column}")
     {
-        _token = token;
-        _position = position;
+        Token = token;
+        Position = position;
     }
+
+    public Option<char> Token { get; }
+
+    public LinePosition Position { get; }
 }

@@ -1,8 +1,6 @@
-﻿using System;
+﻿namespace Messerli.Lexer.Exceptions;
 
-namespace Messerli.Lexer.Exceptions;
-
-public class InvalidTokenException : Exception
+public class InvalidTokenException : LexerException
 {
     public InvalidTokenException(string message)
         : base(message)
