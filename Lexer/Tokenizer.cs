@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Funcky.Monads;
 using Messerli.Lexer.Exceptions;
@@ -10,13 +11,13 @@ namespace Messerli.Lexer;
 
 public class Tokenizer
 {
-    private readonly ILexerRules _lexerRules;
+    private readonly ImmutableList<ILexerRule> _lexerRules;
     private readonly Func<string, ILexerReader> _newLexerReader;
     private readonly LinePositionCalculator.Factory _newLinePositionCalculator;
     private readonly List<Lexeme> _lexemes = new();
 
-    public Tokenizer(ILexerRules lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator)
-        => (_lexerRules, _newLexerReader, _newLinePositionCalculator) = (lexerRules, newLexerReader, newLinePositionCalculator);
+    public Tokenizer(IEnumerable<ILexerRule> lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator)
+        => (_lexerRules, _newLexerReader, _newLinePositionCalculator) = (lexerRules.ToImmutableList(), newLexerReader, newLinePositionCalculator);
 
     public List<Lexeme> Scan(string expression)
     {
@@ -50,7 +51,6 @@ public class Tokenizer
 
     private Option<Lexeme> SelectLexerRule(ILexerReader reader, List<Lexeme> context)
         => _lexerRules
-            .GetRules()
             .Where(rule => rule.IsActive(context))
             .OrderByDescending(GetRuleWeight)
             .Select(rule => rule.Match(reader))

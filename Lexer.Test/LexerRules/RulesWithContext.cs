@@ -6,9 +6,9 @@ using Messerli.Lexer.Test.Tokens;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class RulesWithContext : ILexerRules
+public class RulesWithContext
 {
-    public IEnumerable<ILexerRule> GetRules()
+    public static IEnumerable<ILexerRule> GetRules()
     {
         yield return new SimpleLexerRule<SpaceToken>(" ");
         yield return new SimpleLexerRule<AaToken>("aa");

@@ -62,7 +62,7 @@ public class LexerTest
     [Fact]
     public void GivenALexerMissingAProductionForAGivenStringItShouldThrowAnException()
     {
-        var tokenizer = new Tokenizer(new EmptyRules(), s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
+        var tokenizer = new Tokenizer(EmptyRules.GetRules(), LexerReader.Create, LinePositionCalculator.Create);
 
         Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("You can't tokenize this!"));
     }
@@ -70,8 +70,7 @@ public class LexerTest
     [Fact]
     public void GivenAStringAndAMissingTokenizerThrows()
     {
-        var x = new RulesWithContext();
-        var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
+        var tokenizer = new Tokenizer(RulesWithContext.GetRules(), LexerReader.Create, LinePositionCalculator.Create);
 
         var exception = Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("aa aa cc aa UU cc aa"));
 
@@ -81,8 +80,7 @@ public class LexerTest
     [Fact]
     public void GivenALexerAndAContextedLexerRuleGenerateTokenContexted()
     {
-        var x = new RulesWithContext();
-        var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
+        var tokenizer = new Tokenizer(RulesWithContext.GetRules(), LexerReader.Create, LinePositionCalculator.Create);
 
         var lexemes = tokenizer.Scan("aa aa cc aa bb cc aa").ToList();
 
@@ -108,7 +106,5 @@ public class LexerTest
     }
 
     private static Tokenizer CreateTestTokenizer()
-    {
-        return new Tokenizer(new ExampleRules(), LexerReader.Create, lexemes => new LinePositionCalculator(lexemes));
-    }
+        => new(ExampleRules.GetRules(), LexerReader.Create, LinePositionCalculator.Create);
 }

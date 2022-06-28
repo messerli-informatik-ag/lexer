@@ -24,12 +24,9 @@ public class TokenWalker
     private Position EpsilonPosition
         => new(_lexemes.Last().Position.EndPosition, EpsilonLength);
 
-    public static TokenWalker Create<TEpsilonToken>(ILexerRules lexerRules)
+    public static TokenWalker Create<TEpsilonToken>(IEnumerable<LexerRule> lexerRules)
         where TEpsilonToken : IToken, new()
         => new(CreateTokenizer(lexerRules), () => new TEpsilonToken(), LinePositionCalculator.Create);
-
-    private static Tokenizer CreateTokenizer(ILexerRules lexerRules) 
-        => new(lexerRules, LexerReader.Create, LinePositionCalculator.Create);
 
     public void Scan(string expression)
         => Scan(expression, t => t);
@@ -60,6 +57,9 @@ public class TokenWalker
         => _linePositionCalculator == null
             ? throw new Exception("Call Scan first before you try to calculate a position.")
             : _linePositionCalculator.CalculateLinePosition(lexeme);
+
+    private static Tokenizer CreateTokenizer(IEnumerable<LexerRule> lexerRules)
+        => new(lexerRules, LexerReader.Create, LinePositionCalculator.Create);
 
     private bool ValidToken(int lookAhead = 0)
         => _currentIndex + lookAhead < _lexemes.Count;

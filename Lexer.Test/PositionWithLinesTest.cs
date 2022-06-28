@@ -10,7 +10,7 @@ public class PositionWithLinesTest
     [Fact]
     public void GiveALexerAndALineSeparatorThePositionsAreGivenInLineAndColumn()
     {
-        var tokenizer = new Tokenizer(new WordTokenizerWithLines(), s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
+        var tokenizer = new Tokenizer(WordTokenizerWithLines.GetRules(), s => new LexerReader(s), LinePositionCalculator.Create);
 
         var lexemes = tokenizer.Scan(ExampleTextWihtNewLines);
 

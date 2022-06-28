@@ -5,9 +5,9 @@ using Messerli.Lexer.Test.Tokens;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class WordTokenizerWithLines : ILexerRules
+public class WordTokenizerWithLines
 {
-    public IEnumerable<ILexerRule> GetRules()
+    public static IEnumerable<ILexerRule> GetRules()
     {
         yield return new LexerRule(char.IsLetter, ScanWord);
         yield return new SimpleLexerRule<SpaceToken>(" ");

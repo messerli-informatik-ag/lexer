@@ -6,9 +6,9 @@ using static Funcky.Functional;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-internal class ExampleRules : ILexerRules
+internal static class ExampleRules
 {
-    public IEnumerable<ILexerRule> GetRules()
+    public static IEnumerable<ILexerRule> GetRules()
     {
         yield return new SimpleLexerRule<EqualToken>("=");
         yield return new SimpleLexerRule<DoubleEqualToken>("==");
