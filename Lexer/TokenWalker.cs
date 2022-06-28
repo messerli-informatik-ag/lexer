@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using Messerli.Lexer.Rules;
 using Messerli.Lexer.Tokens;
 
 namespace Messerli.Lexer;
@@ -22,6 +24,13 @@ public class TokenWalker
 
     private Position EpsilonPosition
         => new(_lexemes.Last().Position.EndPosition, EpsilonLength);
+
+    public static TokenWalker Create<TEpsilonToken>(ILexerRules lexerRules)
+        where TEpsilonToken : IToken, new()
+        => new TokenWalker(
+            new Tokenizer(lexerRules, input => new LexerReader(input), lexemes => new LinePositionCalculator(lexemes)),
+            () => new TEpsilonToken(),
+            lexemes => new LinePositionCalculator(lexemes));
 
     public void Scan(string expression)
         => Scan(expression, t => t);
