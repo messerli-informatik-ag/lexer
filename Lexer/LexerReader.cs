@@ -27,7 +27,7 @@ public sealed class LexerReader : ILexerReader
     }
 
     private Option<char> PeekAt(int position)
-        => position is 0 && position < _expression.Length
+        => position >= 0 && position < _expression.Length
             ? _expression[position]
             : Option<char>.None();
 }
