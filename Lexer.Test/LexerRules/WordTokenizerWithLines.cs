@@ -16,7 +16,7 @@ namespace Messerli.Lexer.Test.LexerRules
             yield return new SimpleLexerRule<NewLineToken>("\r");
         }
 
-        private Lexem ScanWord(ILexerReader reader)
+        private Lexeme ScanWord(ILexerReader reader)
         {
             var startPosition = reader.Position;
             var word = new StringBuilder();
@@ -26,7 +26,7 @@ namespace Messerli.Lexer.Test.LexerRules
                 reader.Read().AndThen(c => word.Append(c));
             }
 
-            return new Lexem(new WordToken(word.ToString()), new Position(startPosition, reader.Position - startPosition));
+            return new Lexeme(new WordToken(word.ToString()), new Position(startPosition, reader.Position - startPosition));
         }
     }
 }

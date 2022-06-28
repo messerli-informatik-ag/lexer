@@ -21,7 +21,7 @@ namespace Messerli.Lexer.Test.LexerRules
                 3);
         }
 
-        private Lexem ScanCcAfterBB(ILexerReader reader)
+        private Lexeme ScanCcAfterBB(ILexerReader reader)
         {
             var startPosition = reader.Position;
 
@@ -31,7 +31,7 @@ namespace Messerli.Lexer.Test.LexerRules
                 if (reader.Peek().Match(none: false, some: c => c == 'c'))
                 {
                     reader.Read();
-                    return new Lexem(new CcAfterBbToken(), new Position(startPosition, reader.Position - startPosition));
+                    return new Lexeme(new CcAfterBbToken(), new Position(startPosition, reader.Position - startPosition));
                 }
             }
 

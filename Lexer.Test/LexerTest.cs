@@ -35,34 +35,34 @@ namespace Messerli.Lexer.Test
         }
 
         [Fact]
-        public void GivenLexerRulesTheLexemsHaveTheRightPositions()
+        public void GivenLexerRulesTheLexemesHaveTheRightPositions()
         {
             var tokenizer = CreateTestTokenizer();
 
-            var lexems = tokenizer.Scan("love and sand and testing").ToList();
-            Assert.Equal(9, lexems.Count);
+            var lexemes = tokenizer.Scan("love and sand and testing").ToList();
+            Assert.Equal(9, lexemes.Count);
 
-            Assert.Equal(0, lexems[0].Position.StartPosition);
-            Assert.Equal(4, lexems[0].Position.Length);
-            Assert.Equal(4, lexems[0].Position.EndPosition);
+            Assert.Equal(0, lexemes[0].Position.StartPosition);
+            Assert.Equal(4, lexemes[0].Position.Length);
+            Assert.Equal(4, lexemes[0].Position.EndPosition);
 
-            Assert.IsType<SpaceToken>(lexems[3].Token);
+            Assert.IsType<SpaceToken>(lexemes[3].Token);
 
-            Assert.Equal(8, lexems[3].Position.StartPosition);
-            Assert.Equal(1, lexems[3].Position.Length);
-            Assert.Equal(9, lexems[3].Position.EndPosition);
+            Assert.Equal(8, lexemes[3].Position.StartPosition);
+            Assert.Equal(1, lexemes[3].Position.Length);
+            Assert.Equal(9, lexemes[3].Position.EndPosition);
 
-            Assert.IsType<AndToken>(lexems[6].Token);
+            Assert.IsType<AndToken>(lexemes[6].Token);
 
-            Assert.Equal(14, lexems[6].Position.StartPosition);
-            Assert.Equal(3, lexems[6].Position.Length);
-            Assert.Equal(17, lexems[6].Position.EndPosition);
+            Assert.Equal(14, lexemes[6].Position.StartPosition);
+            Assert.Equal(3, lexemes[6].Position.Length);
+            Assert.Equal(17, lexemes[6].Position.EndPosition);
         }
 
         [Fact]
         public void GivenALexerMissingAProductionForAGivenStringItShouldThrowAnException()
         {
-            var tokenizer = new Tokenizer(new EmptyRules(), s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
+            var tokenizer = new Tokenizer(new EmptyRules(), s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
 
             Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("You can't tokenize this!"));
         }
@@ -71,7 +71,7 @@ namespace Messerli.Lexer.Test
         public void GivenAStringAndAMissingTokenizerThrows()
         {
             var x = new ContextedRules();
-            var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
+            var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
 
             var exception = Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("aa aa cc aa UU cc aa"));
 
@@ -82,34 +82,34 @@ namespace Messerli.Lexer.Test
         public void GivenALexerAndAContextedLexerRuleGenerateTokenContexted()
         {
             var x = new ContextedRules();
-            var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
+            var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
 
-            var lexems = tokenizer.Scan("aa aa cc aa bb cc aa").ToList();
+            var lexemes = tokenizer.Scan("aa aa cc aa bb cc aa").ToList();
 
-            Assert.Equal(13, lexems.Count);
+            Assert.Equal(13, lexemes.Count);
 
-            Assert.IsType<AaToken>(lexems[0].Token);
-            Assert.IsType<SpaceToken>(lexems[1].Token);
-            Assert.IsType<AaToken>(lexems[2].Token);
-            Assert.IsType<SpaceToken>(lexems[3].Token);
+            Assert.IsType<AaToken>(lexemes[0].Token);
+            Assert.IsType<SpaceToken>(lexemes[1].Token);
+            Assert.IsType<AaToken>(lexemes[2].Token);
+            Assert.IsType<SpaceToken>(lexemes[3].Token);
 
             // The first cc produces a CcToken
-            Assert.IsType<CcToken>(lexems[4].Token);
-            Assert.IsType<SpaceToken>(lexems[5].Token);
-            Assert.IsType<AaToken>(lexems[6].Token);
-            Assert.IsType<SpaceToken>(lexems[7].Token);
-            Assert.IsType<BbToken>(lexems[8].Token);
-            Assert.IsType<SpaceToken>(lexems[9].Token);
+            Assert.IsType<CcToken>(lexemes[4].Token);
+            Assert.IsType<SpaceToken>(lexemes[5].Token);
+            Assert.IsType<AaToken>(lexemes[6].Token);
+            Assert.IsType<SpaceToken>(lexemes[7].Token);
+            Assert.IsType<BbToken>(lexemes[8].Token);
+            Assert.IsType<SpaceToken>(lexemes[9].Token);
 
             // The second cc produces a CcAfterBbToken because there is a BbToken already produced
-            Assert.IsType<CcAfterBbToken>(lexems[10].Token);
-            Assert.IsType<SpaceToken>(lexems[11].Token);
-            Assert.IsType<AaToken>(lexems[12].Token);
+            Assert.IsType<CcAfterBbToken>(lexemes[10].Token);
+            Assert.IsType<SpaceToken>(lexemes[11].Token);
+            Assert.IsType<AaToken>(lexemes[12].Token);
         }
 
         private Tokenizer CreateTestTokenizer()
         {
-            return new Tokenizer(new ExampleRules(), s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
+            return new Tokenizer(new ExampleRules(), s => new LexerReader(s), lexemes => new LinePositionCalculator(lexemes));
         }
     }
 }

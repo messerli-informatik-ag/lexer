@@ -6,7 +6,7 @@ namespace Messerli.Lexer.Rules
 {
     public class LexerRule : ILexerRule
     {
-        public LexerRule(Predicate<char> predicate, Func<ILexerReader, Lexem> createToken, int weight = 0)
+        public LexerRule(Predicate<char> predicate, Func<ILexerReader, Lexeme> createToken, int weight = 0)
         {
             Predicate = predicate;
             CreateToken = createToken;
@@ -15,16 +15,16 @@ namespace Messerli.Lexer.Rules
 
         public Predicate<char> Predicate { get; }
 
-        public Func<ILexerReader, Lexem> CreateToken { get; }
+        public Func<ILexerReader, Lexeme> CreateToken { get; }
 
         public int Weight { get; }
 
-        public Option<Lexem> Match(ILexerReader reader)
+        public Option<Lexeme> Match(ILexerReader reader)
             => ApplyPredicate(reader).Match(none: false, some: p => p)
                 ? CreateToken(reader)
-                : Option<Lexem>.None();
+                : Option<Lexeme>.None();
 
-        public bool IsActive(List<Lexem> context)
+        public bool IsActive(List<Lexeme> context)
             => true;
 
         private Option<bool> ApplyPredicate(ILexerReader reader)

@@ -12,42 +12,42 @@ namespace Messerli.Lexer
         private readonly ILexerRules _lexerRules;
         private readonly Func<string, ILexerReader> _newLexerReader;
         private readonly LinePositionCalculator.Factory _newLinePositionCalculator;
-        private readonly List<Lexem> _lexems = new List<Lexem>();
+        private readonly List<Lexeme> _lexemes = new List<Lexeme>();
 
         public Tokenizer(ILexerRules lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator)
             => (_lexerRules, _newLexerReader, _newLinePositionCalculator) = (lexerRules, newLexerReader, newLinePositionCalculator);
 
-        public List<Lexem> Scan(string expression)
+        public List<Lexeme> Scan(string expression)
         {
             var reader = _newLexerReader(expression);
 
-            _lexems.Clear();
+            _lexemes.Clear();
             while (reader.Peek().Match(none: false, some: c => true))
             {
-                var lexem = SelectLexerRule(reader, _lexems)
+                var lexeme = SelectLexerRule(reader, _lexemes)
                     .Match(
                         none: () => HandleUnknownToken(reader),
                         some: t => t);
 
-                _lexems.Add(lexem);
+                _lexemes.Add(lexeme);
             }
 
-            return _lexems;
+            return _lexemes;
         }
 
-        private Lexem HandleUnknownToken(ILexerReader reader)
+        private Lexeme HandleUnknownToken(ILexerReader reader)
         {
             throw new UnknownTokenException(reader.Peek(), CalculateCurrentLinePosition(reader.Position));
         }
 
         private LinePosition CalculateCurrentLinePosition(int position)
         {
-            var positionCalculator = _newLinePositionCalculator(_lexems);
+            var positionCalculator = _newLinePositionCalculator(_lexemes);
 
             return positionCalculator.CalculateLinePosition(position);
         }
 
-        private Option<Lexem> SelectLexerRule(ILexerReader reader, List<Lexem> context)
+        private Option<Lexeme> SelectLexerRule(ILexerReader reader, List<Lexeme> context)
             => _lexerRules
                 .GetRules()
                 .Where(rule => rule.IsActive(context))
@@ -55,7 +55,7 @@ namespace Messerli.Lexer
                 .Select(rule => rule.Match(reader))
                 .FirstOrDefault(HasRuleMatched);
 
-        private bool HasRuleMatched(Option<Lexem> matched)
+        private bool HasRuleMatched(Option<Lexeme> matched)
             => matched.Match(
                 none: false,
                 some: t => true);

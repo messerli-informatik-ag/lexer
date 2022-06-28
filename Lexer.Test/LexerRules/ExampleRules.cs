@@ -18,7 +18,7 @@ namespace Messerli.Lexer.Test.LexerRules
             yield return new LexerRule(char.IsLetter, ScanIdentifier);
         }
 
-        private static Lexem ScanIdentifier(ILexerReader reader)
+        private static Lexeme ScanIdentifier(ILexerReader reader)
         {
             var startPosition = reader.Position;
             var stringBuilder = new StringBuilder();
@@ -27,7 +27,7 @@ namespace Messerli.Lexer.Test.LexerRules
                 stringBuilder.Append(reader.Read().Match(none: ' ', some: c => c));
             }
 
-            return new Lexem(new IdentifierToken(stringBuilder.ToString()), new Position(startPosition, reader.Position - startPosition));
+            return new Lexeme(new IdentifierToken(stringBuilder.ToString()), new Position(startPosition, reader.Position - startPosition));
         }
     }
 }

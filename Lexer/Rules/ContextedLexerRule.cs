@@ -6,7 +6,7 @@ namespace Messerli.Lexer.Rules
 {
     public record ContextedLexerRule : ILexerRule
     {
-        public ContextedLexerRule(Predicate<char> symbolPredicate, Predicate<List<Lexem>> contextPredicate, Func<ILexerReader, Lexem> createToken, int weight)
+        public ContextedLexerRule(Predicate<char> symbolPredicate, Predicate<List<Lexeme>> contextPredicate, Func<ILexerReader, Lexeme> createToken, int weight)
         {
             SymbolPredicate = symbolPredicate;
             ContextPredicate = contextPredicate;
@@ -16,22 +16,22 @@ namespace Messerli.Lexer.Rules
 
         public Predicate<char> SymbolPredicate { get; }
 
-        public Predicate<List<Lexem>> ContextPredicate { get; }
+        public Predicate<List<Lexeme>> ContextPredicate { get; }
 
-        public Func<ILexerReader, Lexem> CreateToken { get; }
+        public Func<ILexerReader, Lexeme> CreateToken { get; }
 
         public int Weight { get; }
 
-        public Option<Lexem> Match(ILexerReader reader)
+        public Option<Lexeme> Match(ILexerReader reader)
             => ApplyPredicate(reader).Match(none: false, some: p => p)
                 ? CreateToken(reader)
-                : Option<Lexem>.None();
+                : Option<Lexeme>.None();
 
         private Option<bool> ApplyPredicate(ILexerReader reader)
             => from nextCharacter in reader.Peek()
                select SymbolPredicate(nextCharacter);
 
-        public bool IsActive(List<Lexem> context)
+        public bool IsActive(List<Lexeme> context)
             => ContextPredicate(context);
     }
 }

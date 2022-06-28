@@ -7,20 +7,20 @@ namespace Messerli.Lexer
     {
         private readonly List<Position> _newLines;
 
-        public LinePositionCalculator(List<Lexem> lexems) =>
-            _newLines = lexems
+        public LinePositionCalculator(List<Lexeme> lexemes) =>
+            _newLines = lexemes
                 .Where(l => l.IsLineBreak)
                 .Select(l => l.Position)
                 .ToList();
 
-        public delegate ILinePositionCalculator Factory(List<Lexem> lexems);
+        public delegate ILinePositionCalculator Factory(List<Lexeme> lexemes);
 
-        public LinePosition CalculateLinePosition(Lexem lexem)
+        public LinePosition CalculateLinePosition(Lexeme lexeme)
             => CalculateRelativePosition(
-                LineNumber(lexem.Position.StartPosition),
-                lexem.Position.StartPosition,
-                lexem.Position.Length,
-                FindClosestNewLineBefore(lexem.Position.StartPosition));
+                LineNumber(lexeme.Position.StartPosition),
+                lexeme.Position.StartPosition,
+                lexeme.Position.Length,
+                FindClosestNewLineBefore(lexeme.Position.StartPosition));
 
         public LinePosition CalculateLinePosition(int absolutePosition)
             => CalculateRelativePosition(

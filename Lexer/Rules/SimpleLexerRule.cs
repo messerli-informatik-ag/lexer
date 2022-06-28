@@ -21,18 +21,18 @@ namespace Messerli.Lexer.Rules
         public int Weight
             => _textSymbol.Length;
 
-        public Option<Lexem> Match(ILexerReader reader)
+        public Option<Lexeme> Match(ILexerReader reader)
             => MatchLexem(reader, reader.Position);
 
-        public bool IsActive(List<Lexem> context)
+        public bool IsActive(List<Lexeme> context)
             => true;
 
-        private Option<Lexem> MatchLexem(ILexerReader reader, int startPosition)
+        private Option<Lexeme> MatchLexem(ILexerReader reader, int startPosition)
             => IsSymbolMatchingReader(reader) && (IsOperator() || HasWordBoundary(reader))
                 ? ConsumeLexem(reader, startPosition)
-                : Option<Lexem>.None();
+                : Option<Lexeme>.None();
 
-        private Option<Lexem> ConsumeLexem(ILexerReader reader, int startPosition)
+        private Option<Lexeme> ConsumeLexem(ILexerReader reader, int startPosition)
         {
             _textSymbol.ForEach(_ => reader.Read());
 
@@ -54,10 +54,10 @@ namespace Messerli.Lexer.Rules
             => _textSymbol.Select((character, index) => new { character, index })
                 .All(t => reader.Peek(t.index).Match(none: false, some: c => c == t.character));
 
-        private Lexem CreateLexem(int start)
+        private Lexeme CreateLexem(int start)
             => CreateLexemFromToken(start, new TToken());
 
-        private Lexem CreateLexemFromToken(int start, TToken token)
+        private Lexeme CreateLexemFromToken(int start, TToken token)
             => new(token, new Position(start, _textSymbol.Length), token is ILineBreakToken);
     }
 }
