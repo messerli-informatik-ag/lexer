@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Funcky.Extensions;
 using Messerli.Lexer.Rules;
 using Messerli.Lexer.Tokens;
 
@@ -22,7 +23,7 @@ public sealed class TokenWalker : ITokenWalker
         => (_tokenizer, _newEpsilonToken, _newLinePositionCalculator) = (tokenizer, newEpsilonToken, newLinePositionCalculator);
 
     private Position EpsilonPosition
-        => new(_lexemes.Last().Position.EndPosition, EpsilonLength);
+        => new(_lexemes.LastOrNone().Match(none: 0, some: lexem => lexem.Position.EndPosition), EpsilonLength);
 
     public static TokenWalker Create<TEpsilonToken>(IEnumerable<ILexerRule> lexerRules)
         where TEpsilonToken : IToken, new()
