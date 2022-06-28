@@ -8,15 +8,10 @@ using Xunit;
 namespace Lexer.Test
 {
     /// <summary>
-    /// Test to verify the functionality of the lexer
+    /// Test to verify the functionality of the lexer.
     /// </summary>
     public class LexerTest
     {
-        Tokenizer CreateTestTokenizer()
-        {
-            return new Tokenizer(new ExampleRules(), s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
-        }
-
         [Fact]
         public void GivenSymbolsWithOverlappingPrefixesTheLexerGetsTheLongerOne()
         {
@@ -48,8 +43,6 @@ namespace Lexer.Test
             var lexems = tokenizer.Scan("love and sand and testing").ToList();
             Assert.Equal(9, lexems.Count);
 
-            //Assert.IsType<IdentifierToken>(lexems[0].Token);
-
             Assert.Equal(0, lexems[0].Position.StartPosition);
             Assert.Equal(4, lexems[0].Position.Length);
             Assert.Equal(4, lexems[0].Position.EndPosition);
@@ -75,13 +68,11 @@ namespace Lexer.Test
             Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("You can't tokenize this!"));
         }
 
-
         [Fact]
         public void GivenAStringAndAMissingTokenizerThrows()
         {
             var x = new ContextedRules();
             var tokenizer = new Tokenizer(x, s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
-
 
             var exception = Assert.Throws<UnknownTokenException>(() => tokenizer.Scan("aa aa cc aa UU cc aa"));
 
@@ -102,7 +93,7 @@ namespace Lexer.Test
             Assert.IsType<SpaceToken>(lexems[1].Token);
             Assert.IsType<AaToken>(lexems[2].Token);
             Assert.IsType<SpaceToken>(lexems[3].Token);
-            
+
             // The first cc produces a CcToken
             Assert.IsType<CcToken>(lexems[4].Token);
             Assert.IsType<SpaceToken>(lexems[5].Token);
@@ -115,6 +106,11 @@ namespace Lexer.Test
             Assert.IsType<CcAfterBbToken>(lexems[10].Token);
             Assert.IsType<SpaceToken>(lexems[11].Token);
             Assert.IsType<AaToken>(lexems[12].Token);
+        }
+
+        private Tokenizer CreateTestTokenizer()
+        {
+            return new Tokenizer(new ExampleRules(), s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
         }
     }
 }

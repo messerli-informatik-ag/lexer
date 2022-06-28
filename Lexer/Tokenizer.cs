@@ -14,7 +14,7 @@ namespace Messerli.Lexer
         private readonly LinePositionCalculator.Factory _newLinePositionCalculator;
         private readonly List<Lexem> _lexems = new List<Lexem>();
 
-        public Tokenizer(ILexerRules lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator) 
+        public Tokenizer(ILexerRules lexerRules, Func<string, ILexerReader> newLexerReader, LinePositionCalculator.Factory newLinePositionCalculator)
             => (_lexerRules, _newLexerReader, _newLinePositionCalculator) = (lexerRules, newLexerReader, newLinePositionCalculator);
 
         public List<Lexem> Scan(string expression)
@@ -22,7 +22,7 @@ namespace Messerli.Lexer
             var reader = _newLexerReader(expression);
 
             _lexems.Clear();
-            while (reader.Peek().Match(false, c => true))
+            while (reader.Peek().Match(none: false, some: c => true))
             {
                 var lexem = SelectLexerRule(reader, _lexems)
                     .Match(

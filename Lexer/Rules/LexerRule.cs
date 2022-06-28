@@ -20,15 +20,15 @@ namespace Messerli.Lexer.Rules
         public int Weight { get; }
 
         public Option<Lexem> Match(ILexerReader reader)
-            => ApplyPredicate(reader).Match(false, p => p)
+            => ApplyPredicate(reader).Match(none: false, some: p => p)
                 ? CreateToken(reader)
                 : Option<Lexem>.None();
+
+        public bool IsActive(List<Lexem> context)
+            => true;
 
         private Option<bool> ApplyPredicate(ILexerReader reader)
             => from nextCharacter in reader.Peek()
                select Predicate(nextCharacter);
-
-        public bool IsActive(List<Lexem> context)
-            => true;
     }
 }

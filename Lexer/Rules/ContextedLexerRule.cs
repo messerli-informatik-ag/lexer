@@ -23,7 +23,7 @@ namespace Messerli.Lexer.Rules
         public int Weight { get; }
 
         public Option<Lexem> Match(ILexerReader reader)
-            => ApplyPredicate(reader).Match(false, p => p)
+            => ApplyPredicate(reader).Match(none: false, some: p => p)
                 ? CreateToken(reader)
                 : Option<Lexem>.None();
 

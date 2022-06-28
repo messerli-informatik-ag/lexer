@@ -6,7 +6,7 @@ namespace Messerli.Lexer
     {
         private readonly string _expression;
 
-        public LexerReader(string expression) 
+        public LexerReader(string expression)
             => _expression = expression;
 
         public int Position { get; private set; }

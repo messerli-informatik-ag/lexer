@@ -7,7 +7,7 @@ using Messerli.Lexer.Rules;
 
 namespace Lexer.Test.LexerRules
 {
-    class ContextedRules : ILexerRules
+    public class ContextedRules : ILexerRules
     {
         public IEnumerable<ILexerRule> GetRules()
         {
@@ -26,10 +26,10 @@ namespace Lexer.Test.LexerRules
         {
             var startPosition = reader.Position;
 
-            if (reader.Peek().Match(false, c => c == 'c'))
+            if (reader.Peek().Match(none: false, some: c => c == 'c'))
             {
                 reader.Read();
-                if (reader.Peek().Match(false, c => c == 'c'))
+                if (reader.Peek().Match(none: false, some: c => c == 'c'))
                 {
                     reader.Read();
                     return new Lexem(new CcAfterBbToken(), new Position(startPosition, reader.Position - startPosition));

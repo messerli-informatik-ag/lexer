@@ -3,17 +3,8 @@ using System.Linq;
 
 namespace Messerli.Lexer
 {
-    public interface ILinePositionCalculator
-    {
-        LinePosition CalculateLinePosition(Lexem lexem);
-
-        LinePosition CalculateLinePosition(int absolutePosition);
-    }
-
     public class LinePositionCalculator : ILinePositionCalculator
     {
-        public delegate ILinePositionCalculator Factory(List<Lexem> lexems);
-
         private readonly List<Position> _newLines;
 
         public LinePositionCalculator(List<Lexem> lexems) =>
@@ -21,6 +12,8 @@ namespace Messerli.Lexer
                 .Where(l => l.IsLineBreak)
                 .Select(l => l.Position)
                 .ToList();
+
+        public delegate ILinePositionCalculator Factory(List<Lexem> lexems);
 
         public LinePosition CalculateLinePosition(Lexem lexem)
             => CalculateRelativePosition(

@@ -23,9 +23,9 @@ namespace Lexer.Test.LexerRules
         {
             var startPosition = reader.Position;
             var stringBuilder = new StringBuilder();
-            while (reader.Peek().Match(false, char.IsLetterOrDigit))
+            while (reader.Peek().Match(none: false, some: char.IsLetterOrDigit))
             {
-                stringBuilder.Append(reader.Read().Match(' ', c => c));
+                stringBuilder.Append(reader.Read().Match(none: ' ', some: c => c));
             }
 
             return new Lexem(new IdentifierToken(stringBuilder.ToString()), new Position(startPosition, reader.Position - startPosition));

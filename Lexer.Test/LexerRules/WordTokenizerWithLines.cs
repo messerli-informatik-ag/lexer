@@ -6,7 +6,7 @@ using Messerli.Lexer.Rules;
 
 namespace Lexer.Test.LexerRules
 {
-    class WordTokenizerWithLines : ILexerRules
+    public class WordTokenizerWithLines : ILexerRules
     {
         public IEnumerable<ILexerRule> GetRules()
         {

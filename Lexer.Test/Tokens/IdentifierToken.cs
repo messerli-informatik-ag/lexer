@@ -12,6 +12,5 @@ namespace Lexer.Test.Tokens
         public string Name { get; }
 
         public override string ToString() => $"Identifier: {Name}";
-
     }
 }

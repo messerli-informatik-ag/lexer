@@ -14,7 +14,7 @@ namespace Lexer.Test
             var tokenizer = new Tokenizer(new WordTokenizerWithLines(), s => new LexerReader(s), lexems => new LinePositionCalculator(lexems));
 
             var lexems = tokenizer.Scan(ExampleTextWihtNewLines);
-            
+
             var positions = new LinePositionCalculator(lexems);
 
             // hello on line 1
@@ -36,7 +36,6 @@ namespace Lexer.Test
             Assert.Equal(6, positions.CalculateLinePosition(lexems[27]).Line);
             Assert.Equal(5, positions.CalculateLinePosition(lexems[27]).Column);
             Assert.Equal(3, positions.CalculateLinePosition(lexems[27]).Length);
-
         }
     }
 }

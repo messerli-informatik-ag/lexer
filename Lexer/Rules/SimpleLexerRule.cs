@@ -24,6 +24,9 @@ namespace Messerli.Lexer.Rules
         public Option<Lexem> Match(ILexerReader reader)
             => MatchLexem(reader, reader.Position);
 
+        public bool IsActive(List<Lexem> context)
+            => true;
+
         private Option<Lexem> MatchLexem(ILexerReader reader, int startPosition)
             => IsSymbolMatchingReader(reader) && (IsOperator() || HasWordBoundary(reader))
                 ? ConsumeLexem(reader, startPosition)
@@ -36,13 +39,10 @@ namespace Messerli.Lexer.Rules
             return CreateLexem(startPosition);
         }
 
-        public bool IsActive(List<Lexem> context)
-            => true;
-
+        // we do not want to extract key words in the middle of a word, so a symbol must have ended.
+        // Which means after a textsymbol must come something other than a digit or a letter.
         private bool HasWordBoundary(ILexerReader reader)
-            // we do not want to extract key words in the middle of a word, so a symbol must have ended.
-            // Which means after a textsymbol must come something other than a digit or a letter.
-            => reader.Peek(_textSymbol.Length).Match(true, NonLetterOrDigit);
+            => reader.Peek(_textSymbol.Length).Match(none: true, some: NonLetterOrDigit);
 
         private bool IsOperator()
             => !_isTextSymbol;
@@ -52,7 +52,7 @@ namespace Messerli.Lexer.Rules
 
         private bool IsSymbolMatchingReader(ILexerReader reader)
             => _textSymbol.Select((character, index) => new { character, index })
-                .All(t => reader.Peek(t.index).Match(false, c => c == t.character));
+                .All(t => reader.Peek(t.index).Match(none: false, some: c => c == t.character));
 
         private Lexem CreateLexem(int start)
             => CreateLexemFromToken(start, new TToken());
