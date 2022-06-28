@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk; Microsoft.Build.CentralPackageVersions">
+
+  <PropertyGroup>
+    <TargetFrameworks>net5.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <AssemblyName>Messerli.Lexer</AssemblyName>
+    <RootNamespace>Messerli.Lexer</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>BSD-3-Clause-Clear</PackageLicenseExpression>
+    <Product>Messerli.Lexer</Product>
+    <Description>A simple lexer which gives you a stream of Tokens from a string and some simple to define rules.</Description>
+    <PackageProjectUrl>https://github.com/messerli-informatik-ag/lexer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/messerli-informatik-ag/lexer</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>parser, lexer</PackageTags>
+    <Version>1.0.0</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Funcky" />
+    <PackageReference Include="IsExternalInit" />
+  </ItemGroup>
+
+</Project>
