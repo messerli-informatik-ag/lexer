@@ -53,6 +53,15 @@ We see also how you scan a more complex Lexeme, where you see how you should cre
 TokenWalker.Create<EpsilonToken>(SimpleRules.GetRules())
 ```
 
+### Line-handling
+
+If you have an expression which goes over multiple lines, you usually want the position as Line number + character on that line. The default setting already handles everything as long as you declare the token which denotes a new-line with the interface ILineBreakToken.
+
+```cs
+internal sealed record NewLine(): IToken, ILineBreakToken;
+```
+
+
 ## Special Tasks
 
 ### Overriding Line calculation
