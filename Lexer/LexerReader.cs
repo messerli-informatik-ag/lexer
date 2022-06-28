@@ -2,7 +2,7 @@
 
 namespace Messerli.Lexer;
 
-public class LexerReader : ILexerReader
+public sealed class LexerReader : ILexerReader
 {
     private readonly string _expression;
 

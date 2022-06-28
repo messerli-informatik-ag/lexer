@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Messerli.Lexer.Rules;
-using Messerli.Lexer.Test.Tokens;
+using Messerli.Lexer.Test.Token;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class WordTokenizerWithLines
+internal static class WordTokenizerWithLines
 {
     public static IEnumerable<ILexerRule> GetRules()
     {

@@ -9,7 +9,7 @@ using static Funcky.Functional;
 
 namespace Messerli.Lexer;
 
-public class Tokenizer
+public sealed class Tokenizer : ITokenizer
 {
     private readonly ImmutableList<ILexerRule> _lexerRules;
     private readonly Func<string, ILexerReader> _newLexerReader;

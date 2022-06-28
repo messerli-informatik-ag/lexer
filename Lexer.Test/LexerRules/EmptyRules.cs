@@ -4,7 +4,7 @@ using Messerli.Lexer.Rules;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class EmptyRules
+internal static class EmptyRules
 {
     public static IEnumerable<ILexerRule> GetRules()
         => Enumerable.Empty<ILexerRule>();

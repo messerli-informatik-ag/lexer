@@ -5,9 +5,9 @@ using static Funcky.Functional;
 
 namespace Messerli.Lexer.Rules;
 
-public class ContextedLexerRule : ILexerRule
+public sealed class LexerRuleWithContext : ILexerRule
 {
-    public ContextedLexerRule(Predicate<char> symbolPredicate, Predicate<List<Lexeme>> contextPredicate, Func<ILexerReader, Lexeme> createToken, int weight)
+    public LexerRuleWithContext(Predicate<char> symbolPredicate, Predicate<List<Lexeme>> contextPredicate, Func<ILexerReader, Lexeme> createToken, int weight)
     {
         SymbolPredicate = symbolPredicate;
         ContextPredicate = contextPredicate;

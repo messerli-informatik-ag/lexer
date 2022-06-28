@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Messerli.Lexer;
 
-public class LinePositionCalculator : ILinePositionCalculator
+public sealed class LinePositionCalculator : ILinePositionCalculator
 {
     private readonly ImmutableList<Position> _newLines;
 

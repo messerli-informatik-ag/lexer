@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Messerli.Lexer.Rules;
-using Messerli.Lexer.Test.Tokens;
+using Messerli.Lexer.Test.Token;
 using static Funcky.Functional;
 
 namespace Messerli.Lexer.Test.LexerRules;

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Messerli.Lexer.Exceptions;
 using Messerli.Lexer.Test.LexerRules;
-using Messerli.Lexer.Test.Tokens;
+using Messerli.Lexer.Test.Token;
 using Xunit;
 
 namespace Messerli.Lexer.Test;
@@ -9,7 +9,7 @@ namespace Messerli.Lexer.Test;
 /// <summary>
 /// Test to verify the functionality of the lexer.
 /// </summary>
-public class LexerTest
+public sealed class LexerTest
 {
     [Fact]
     public void GivenSymbolsWithOverlappingPrefixesTheLexerGetsTheLongerOne()

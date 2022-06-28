@@ -3,7 +3,7 @@ using static Funcky.Functional;
 
 namespace Messerli.Lexer.Exceptions;
 
-public class UnknownTokenException : LexerException
+public sealed class UnknownTokenException : LexerException
 {
     public UnknownTokenException(Option<char> token, LinePosition position)
         : base($"Unknown Token '{token.Match(none: 'Ɛ', some: Identity)}' at Line {position.Line} Column {position.Column}")

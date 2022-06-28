@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Messerli.Lexer.Rules;
-using Messerli.Lexer.Test.Tokens;
+using Messerli.Lexer.Test.Token;
 
 namespace Messerli.Lexer.Test.LexerRules;
 
-public class RulesWithContext
+internal static class RulesWithContext
 {
     public static IEnumerable<ILexerRule> GetRules()
     {
@@ -14,7 +14,7 @@ public class RulesWithContext
         yield return new SimpleLexerRule<AaToken>("aa");
         yield return new SimpleLexerRule<BbToken>("bb");
         yield return new SimpleLexerRule<CcToken>("cc");
-        yield return new ContextedLexerRule(
+        yield return new LexerRuleWithContext(
             c => c == 'c',
             context => context.Any(p => p.Token is BbToken),
             ScanCcAfterBb,

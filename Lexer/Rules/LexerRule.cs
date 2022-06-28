@@ -5,7 +5,7 @@ using static Funcky.Functional;
 
 namespace Messerli.Lexer.Rules;
 
-public class LexerRule : ILexerRule
+public sealed class LexerRule : ILexerRule
 {
     public LexerRule(Predicate<char> predicate, Func<ILexerReader, Lexeme> createToken, int weight = 0)
     {

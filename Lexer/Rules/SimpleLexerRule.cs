@@ -6,7 +6,7 @@ using Messerli.Lexer.Tokens;
 
 namespace Messerli.Lexer.Rules;
 
-public class SimpleLexerRule<TToken> : ILexerRule
+public sealed class SimpleLexerRule<TToken> : ILexerRule
     where TToken : IToken, new()
 {
     private readonly string _textSymbol;

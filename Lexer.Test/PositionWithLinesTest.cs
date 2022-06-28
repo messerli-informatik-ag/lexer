@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Messerli.Lexer.Test;
 
-public class PositionWithLinesTest
+public sealed class PositionWithLinesTest
 {
     private const string ExampleTextWihtNewLines = "Hello\r\n\r\nThis is a test\nWe are on line four\nLine five\r\nthe end";
 

@@ -7,10 +7,10 @@ using Messerli.Lexer.Tokens;
 
 namespace Messerli.Lexer;
 
-public class TokenWalker
+public sealed class TokenWalker : ITokenWalker
 {
     private const int EpsilonLength = 0;
-    private readonly Tokenizer _tokenizer;
+    private readonly ITokenizer _tokenizer;
     private readonly Func<IToken> _newEpsilonToken;
     private readonly LinePositionCalculator.Factory _newLinePositionCalculator;
     private List<Lexeme> _lexemes = new();
@@ -18,7 +18,7 @@ public class TokenWalker
 
     private int _currentIndex;
 
-    public TokenWalker(Tokenizer tokenizer, Func<IToken> newEpsilonToken, LinePositionCalculator.Factory newLinePositionCalculator)
+    public TokenWalker(ITokenizer tokenizer, Func<IToken> newEpsilonToken, LinePositionCalculator.Factory newLinePositionCalculator)
         => (_tokenizer, _newEpsilonToken, _newLinePositionCalculator) = (tokenizer, newEpsilonToken, newLinePositionCalculator);
 
     private Position EpsilonPosition
