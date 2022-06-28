@@ -7,12 +7,13 @@ internal sealed record AndToken : IToken;
 internal sealed record BbToken : IToken;
 internal sealed record CcAfterBbToken : IToken;
 internal sealed record CcToken : IToken;
-internal record EqualToken : IToken;
-internal record DoubleEqualToken : IToken;
-internal record GreaterToken : IToken;
-internal record GreaterEqualToken : IToken;
-public record NewLineToken : IToken, ILineBreakToken;
+internal sealed record EqualToken : IToken;
+internal sealed record DoubleEqualToken : IToken;
+internal sealed record GreaterToken : IToken;
+internal sealed record GreaterEqualToken : IToken;
+internal sealed record NewLineToken : IToken, ILineBreakToken;
 internal sealed record SpaceToken : IToken;
+internal sealed record EpsilonToken : IToken;
 
 public record IdentifierToken(string Name) : IToken
 {

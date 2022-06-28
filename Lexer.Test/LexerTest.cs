@@ -105,6 +105,15 @@ public sealed class LexerTest
         Assert.IsType<AaToken>(lexemes[12].Token);
     }
 
+    [Fact]
+    public void EmptyTokenWalkerDoesNotThrowOnPeek()
+    {
+        var tokenWalker = TokenWalker.Create<EpsilonToken>(EmptyRules.GetRules());
+        tokenWalker.Scan(string.Empty, lexemes => lexemes);
+
+        Assert.IsType<EpsilonToken>(tokenWalker.Peek().Token);
+    }
+
     private static Tokenizer CreateTestTokenizer()
         => new(ExampleRules.GetRules(), LexerReader.Create, LinePositionCalculator.Create);
 }
