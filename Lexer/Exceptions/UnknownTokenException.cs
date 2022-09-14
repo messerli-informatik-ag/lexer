@@ -6,7 +6,7 @@ namespace Messerli.Lexer.Exceptions;
 public sealed class UnknownTokenException : LexerException
 {
     public UnknownTokenException(Option<char> token, LinePosition position)
-        : base($"Unknown Token '{token.Match(none: 'Ɛ', some: Identity)}' at Line {position.Line} Column {position.Column}")
+        : base($"Unknown Token '{ToName(token)}' at Line {position.Line} Column {position.Column}")
     {
         Token = token;
         Position = position;
@@ -15,4 +15,7 @@ public sealed class UnknownTokenException : LexerException
     public Option<char> Token { get; }
 
     public LinePosition Position { get; }
+
+    private static char ToName(Option<char> token)
+        => token.Match(none: 'Ɛ', some: Identity);
 }

@@ -23,7 +23,7 @@ public sealed class LexerRule : ILexerRule
     public Option<Lexeme> Match(ILexerReader reader)
         => ApplyPredicate(reader).Match(none: false, some: Identity)
             ? CreateToken(reader)
-            : Option<Lexeme>.None();
+            : Option<Lexeme>.None;
 
     public bool IsActive(List<Lexeme> context)
         => true;

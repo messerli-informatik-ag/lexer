@@ -1,4 +1,5 @@
-﻿using Messerli.Lexer.Tokens;
+﻿#pragma warning disable SA1649 // File name should match first type name
+using Messerli.Lexer.Tokens;
 
 namespace Messerli.Lexer.Test.Token;
 
