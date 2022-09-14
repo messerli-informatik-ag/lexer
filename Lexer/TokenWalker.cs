@@ -25,19 +25,21 @@ public sealed class TokenWalker : ITokenWalker
     private Position EpsilonPosition
         => new(_lexemes.LastOrNone().Match(none: 0, some: lexem => lexem.Position.EndPosition), EpsilonLength);
 
-    public static TokenWalker Create<TEpsilonToken>(IEnumerable<ILexerRule> lexerRules)
+    public static ITokenWalker Create<TEpsilonToken>(IEnumerable<ILexerRule> lexerRules)
         where TEpsilonToken : IToken, new()
-        => new(CreateTokenizer(lexerRules), () => new TEpsilonToken(), LinePositionCalculator.Create);
+        => new TokenWalker(CreateTokenizer(lexerRules), () => new TEpsilonToken(), LinePositionCalculator.Create);
 
-    public void Scan(string expression)
+    public ITokenWalker Scan(string expression)
         => Scan(expression, t => t);
 
-    public void Scan(string expression, Func<IEnumerable<Lexeme>, IEnumerable<Lexeme>> postProcessTokens)
+    public ITokenWalker Scan(string expression, Func<IEnumerable<Lexeme>, IEnumerable<Lexeme>> postProcessTokens)
     {
         _currentIndex = 0;
         var unfilteredLexemes = _tokenizer.Scan(expression);
         _linePositionCalculator = _newLinePositionCalculator(unfilteredLexemes);
         _lexemes = postProcessTokens(unfilteredLexemes).ToList();
+
+        return this;
     }
 
     public Lexeme Pop()

@@ -11,8 +11,8 @@ public sealed class LexerReader : ILexerReader
 
     public int Position { get; private set; }
 
-    public static LexerReader Create(string expression)
-        => new(expression);
+    public static ILexerReader Create(string expression)
+        => new LexerReader(expression);
 
     public Option<char> Peek(int lookAhead = 0)
         => PeekAt(Position + lookAhead);

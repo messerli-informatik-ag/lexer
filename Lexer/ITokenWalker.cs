@@ -5,9 +5,9 @@ namespace Messerli.Lexer;
 
 public interface ITokenWalker
 {
-    void Scan(string expression);
+    ITokenWalker Scan(string expression);
 
-    void Scan(string expression, Func<IEnumerable<Lexeme>, IEnumerable<Lexeme>> postProcessTokens);
+    ITokenWalker Scan(string expression, Func<IEnumerable<Lexeme>, IEnumerable<Lexeme>> postProcessTokens);
 
     Lexeme Pop();
 
