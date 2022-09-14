@@ -30,7 +30,7 @@ public sealed class SimpleLexerRule<TToken> : ILexerRule
     private Option<Lexeme> MatchLexeme(ILexerReader reader, int startPosition)
         => IsSymbolMatchingReader(reader) && (IsOperator() || HasWordBoundary(reader))
             ? ConsumeLexeme(reader, startPosition)
-            : Option<Lexeme>.None();
+            : Option<Lexeme>.None;
 
     private Option<Lexeme> ConsumeLexeme(ILexerReader reader, int startPosition)
     {
