@@ -13,8 +13,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
     <PropertyGroup Label="Common NuGet Metadata">
-        <Company>Messerli Informatik AG</Company>
-        <Authors>Thomas Bruderer</Authors>
+        <Authors>Messerli Informatik AG</Authors>
         <Copyright>© Messerli Informatik AG. All rights reserved.</Copyright>
     </PropertyGroup>
     <PropertyGroup>
